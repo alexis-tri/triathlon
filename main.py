@@ -10,7 +10,7 @@ import re
 import unicodedata
 import random
 import concurrent.futures
-
+from secrets import *
 from pattes import scraping, get_data
 from DatabaseMgmt import *
 
