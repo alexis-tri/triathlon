@@ -1,2 +1,2 @@
 job1:
-  script: echo "Push to CI/CD"
+  script: echo "Push to CI/CD"https://github.com/alexis-tri/triathlon.git

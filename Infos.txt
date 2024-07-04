@@ -1,0 +1,18 @@
+Liste des sites scrapés : 
+
+Tuto database :
+
+https://www.freecodecamp.org/news/connect-python-with-sql/
+https://phoenixnap.com/kb/mysql-command-line-windows
+
+Commandes Git : 
+https://www.atlassian.com/fr/git/tutorials/saving-changes/git-commit
+
+
+
+Formation Site web Flask :
+https://openclassrooms.com/fr/courses/4425066-concevez-un-site-avec-flask
+
+Setup du github
+Création du script de scraping des sites
+Création d'une database
