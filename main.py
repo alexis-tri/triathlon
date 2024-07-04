@@ -1,6 +1,5 @@
 import mysql.connector
 from mysql.connector import Error
-import pandas as pd
 import requests
 import sqlite3
 import urllib3
@@ -10,7 +9,6 @@ import re
 import unicodedata
 import random
 import concurrent.futures
-from secrets import *
 from pattes import scraping, get_data
 from DatabaseMgmt import *
 
@@ -20,7 +18,6 @@ insertDB = '''
     '''
     
 if __name__ == "__main__":
-    '''
     #url_imp = input("Enter the name of the input file (e.g., input.txt): ")
     url_imp="https://nord-pas-de-calais.1000pattes.guide/events/liste/"
     events = scraping(url_imp)
@@ -32,6 +29,11 @@ if __name__ == "__main__":
         for future in concurrent.futures.as_completed(futures):
             title, place, date, distance = future.result()
             res.append([title, place, date, distance])
+
+
+    connection = create_db_connection("localhost", "alexistri", pwalexis, db) # Connect to the Database
+
+    execute_list_query(connection, insertDB, res)
     '''
     today = datetime.date.today()
     wanted_date = datetime.date.today() + datetime.timedelta(weeks=8)
@@ -52,6 +54,5 @@ if __name__ == "__main__":
         actual_date = res[-1][2]
 
 
-    connection = create_db_connection("localhost", "alexistri", pwalexis, db) # Connect to the Database
 
-    execute_list_query(connection, insertDB, res)
+'''

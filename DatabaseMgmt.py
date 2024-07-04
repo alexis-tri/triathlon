@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
-import pandas as pd
+#import pandas as pd
+from secrets import pwalexis
 
 def create_server_connection(host_name, user_name, user_password): #Fonction permettant de se connecter à MySQL Server
     connection = None
