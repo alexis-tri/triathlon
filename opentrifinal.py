@@ -30,6 +30,7 @@ def check_page(url):
     distance = soup.find(class_="elementor-element-f758f4b").text.strip().split(", ")
     return distance
 
+<<<<<<< HEAD
 #res = []
 #with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
     #futures = []
@@ -39,3 +40,14 @@ def check_page(url):
         #res.append(future.result())
 
 #print(res)
+=======
+res = []
+with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+    futures = []
+    for link in links:
+        futures.append(executor.submit(get_data, link))
+    for future in concurrent.futures.as_completed(futures):
+        res.append(future.result())
+
+print(res)
+>>>>>>> 13ede2431634bbc45ff2bedcfdbb6c600da16591
