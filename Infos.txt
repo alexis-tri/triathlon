@@ -13,6 +13,23 @@ https://www.atlassian.com/fr/git/tutorials/saving-changes/git-commit
 Formation Site web Flask :
 https://openclassrooms.com/fr/courses/4425066-concevez-un-site-avec-flask
 
-Setup du github
-Création du script de scraping des sites
-Création d'une database
+Setup du github OK
+Création du script de scraping des sites OK
+Création d'une database OK
+
+Frontend : 
+Le but serait d'avoir une interface simple compatible smartphone et PC 
+Une bannnière en haut qui dirige vers les pages : Home, calendrier, athlètes, et options ?
+Dans home : 
+    Un module Les courses du club : Le club met en favori les courses qu'il souhaite promouvoir
+    Un module Les courses en vogue : Courses où il y a le + d'adhérents qui y participent
+    Un module Concours de dossard : Affiche les adhérents qui ont fait le + de courses
+    Un module Prochaines courses : Affiche les courses des 7 prochains jours (mettre en surbrillance les courses où un adhérent participe)
+
+Dans calendrier :
+    Créer un calendrier bi-hebdomadaire ou mensuel (mettre en surbrillance les courses où un adhérent participe)
+
+Dans athlètes : 
+    Afficher les informations des différents athlètes et leurs prochaines courses et leur dernière et exceptions
+
+Possibilité depuis n'importe où de cliquer sur la course pour pouvoir s'y inscrire
