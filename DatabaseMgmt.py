@@ -27,7 +27,7 @@ def create_database(connection, query): #Fonction permettant de créer une DB
     except Error as err:
         print(f"Error: '{err}'")
 
-create_database_query = "CREATE DATABASE courses"
+#create_database_query = "CREATE DATABASE courses"
 db = "courses"
 #create_database(connection, create_database_query)
 
@@ -53,7 +53,7 @@ def execute_query(connection, query): #Fonction pour exécuter les SQL queries
         connection.commit()
         print("Query successful")
     except Error as err:
-        print(f"Error: '{err}'")
+        print(f"Error: '{err}'IDENTIFICA")
 
 def read_query(connection, query): #Fonction permettant de lire dans les tableaux
     cursor = connection.cursor()
@@ -61,6 +61,7 @@ def read_query(connection, query): #Fonction permettant de lire dans les tableau
     try:
         cursor.execute(query)
         result = cursor.fetchall()
+        print (result)
         return result
     except Error as err:
         print(f"Error: '{err}'")
@@ -84,6 +85,10 @@ CREATE TABLE courses4 (
   );
  """
 
+read_courses_table = """
+SELECT course_id,name
+FROM courses4;
+"""
 
 #insertDB = '''
 #    INSERT INTO courses (course_id, name, place, date, distance_1, distance_2, distance_3, distance_4) 
@@ -99,5 +104,6 @@ val = [
 connectionD = create_db_connection("localhost", "alexistri", pwalexis, db) # Connect to the Database
 
 #execute_query(connectionS, create_database_query) #Création d'une DB
-execute_query(connectionD, create_courses_table) #Création d'une table
+#execute_query(connectionD, create_courses_table) #Création d'une table
 #execute_list_query(connection, sql, val) #Ajout d"une liste dans la DB
+#read_query(connectionD, read_courses_table) #lecture d'une table
