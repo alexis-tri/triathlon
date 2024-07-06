@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
-#import pandas as pd
 from secrets import pwalexis
+#import pandas as pd
 
 def create_server_connection(host_name, user_name, user_password): #Fonction permettant de se connecter à MySQL Server
     connection = None
@@ -75,9 +75,9 @@ def execute_list_query(connection, sql, val): #Fonction permettant d'ajouter une
         print(f"Error: '{err}'")
 
 create_courses_table = """
-CREATE TABLE courses3 (
+CREATE TABLE courses4 (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  name VARCHAR(40) NOT NULL,
+  name VARCHAR(60) NOT NULL,
   place VARCHAR(40) NOT NULL,
   date DATE,
   distance VARCHAR(40)

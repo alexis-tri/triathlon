@@ -7,6 +7,20 @@ https://phoenixnap.com/kb/mysql-command-line-windows
 
 Commandes Git : 
 https://www.atlassian.com/fr/git/tutorials/saving-changes/git-commit
+Liste des commandes Git : 
+Lancer le runner
+    cd .\actions-runner\
+    .\run.cmd
+Voir le status du projet
+    git status
+Ajouter les fichiers
+    git add .
+Verification
+    git status
+Commit
+    git commit -m "Date du JOUR"
+Push en prod
+    git push -u origin main
 
 
 
