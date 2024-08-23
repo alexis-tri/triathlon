@@ -23,9 +23,30 @@ Push en prod
     git push -u origin main
 
 
-
 Formation Site web Flask :
 https://openclassrooms.com/fr/courses/4425066-concevez-un-site-avec-flask
+
+Tuto démarrage d'une appli flask avec Windaube : 
+Tuto de base 
+https://python.developpez.com/tutoriel/intro-flask-python3/
+Commandes windows
+https://flask.palletsprojects.com/en/1.1.x/cli/
+Setup du virtual env
+https://stackoverflow.com/questions/67997606/how-can-i-run-flask-in-windows
+https://stackoverflow.com/questions/35950740/virtualenv-is-not-recognized-as-an-internal-or-external-command-operable-prog
+Setup du app.py : réponse de Viraj : https://stackoverflow.com/questions/29277581/flask-nameerror-name-app-is-not-defined
+Launch venv : .\venv\scripts\activate
+Flask-Login : gère la session utilisateur et gère la connexion et la déconnexion ainsi que la mémorisation des utilisateurs connectés.
+Flask-SQLAlchemy : simplifie l'utilisation de Flask avec SQLAlchemy, une boîte à outils SQL Python et un ORM (mappeur relationnel d'objets) pour interagir avec les bases de données SQL.
+Flask-Mail : aide à l'envoi de messages électroniques dans votre application Flask.
+Tuto Flask-Alchemy
+https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login#step-9-adding-the-login-method
+
+Commandes cmd
+Pour les chemins on utilise \
+créer un dossier mkdir
+Créer un fichier echo. > 
+Supprimer un dossier rmdir
 
 Setup du github OK
 Création du script de scraping des sites OK
