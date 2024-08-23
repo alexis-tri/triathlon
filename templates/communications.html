@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{% block title %} Communications {% endblock %}</h1>
+    {% for comm in comms %}
+        <a href="{{ url_for('main.communication', comm_id=comm['id']) }}">
+            <h2>{{ comm['title'] }}</h2>
+        </a>
+        <span class="badge badge-primary">{{ comm['created'] }}</span>
+        <hr>
+    {% endfor %}
+{% endblock %} 

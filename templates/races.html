@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{% block title %} Courses {% endblock %}</h1>
+    {% for race in races %}
+        <a href="{{ url_for('main.course', race_id=race['id']) }}">
+            <h2>{{ race['name'] }}</h2>
+        </a>
+        <span class="badge badge-primary">{{ race['date'] }}</span>
+        <hr>
+    {% endfor %}
+{% endblock %} 
+ 

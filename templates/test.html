@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+    {% for club in clubs %}
+        <h2>{{ club['clubname'] }}</h2>
+    {% endfor %}
+{% endblock %} 
