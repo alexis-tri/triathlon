@@ -23,10 +23,10 @@ FROM courses4;
 if __name__ == "__main__":
     res = scrap_events()
     for re in res:
-        name = str(res[0])
-        place = str(res[1])
-        date = str(res[2])
-        distance = str(res[3])
+        name = str(re[0])
+        place = str(re[1])
+        date = str(re[2])
+        distance = str(re[3])
         conn = get_db_connection()
         conn.execute('INSERT INTO courses (name, place, date, distance) VALUES (?, ?, ?, ?)',
                          (name, place, date, distance))

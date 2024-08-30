@@ -6,8 +6,8 @@ with open('./BDD/schemacourses.sql') as f:
     connection.executescript(f.read())
 
 cur = connection.cursor()
-'''
-cur.execute("DROP TABLE courses")
+
+#cur.execute("DROP TABLE courses")
 
 
 cur.execute("INSERT INTO courses (name, place, date, distance) VALUES (?, ?, ?, ?)",
@@ -17,6 +17,6 @@ cur.execute("INSERT INTO courses (name, place, date, distance) VALUES (?, ?, ?, 
 cur.execute("INSERT INTO courses (name, place, date, distance) VALUES (?, ?, ?, ?)",
             ('Belle Dys Trail', 'Bailleul', '2024, 9, 22, 0, 0', 'S, M, L')
             )
-'''
+
 connection.commit()
 connection.close()

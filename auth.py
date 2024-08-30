@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Blueprint, render_template, redirect, url_for, request, flash, Flask
+from flask import Blueprint, render_template, redirect, url_for, request, flash, Flask, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user,login_required, logout_user
 from .models import users, clubs
@@ -29,8 +29,13 @@ def login_post():
     # login code goes here
     email = request.form.get('email')
     password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
+    if request.method == 'POST':
+        session['username'] = request.form['prenom']
+        session['email'] = request.form['email']
+        session['id'] = request.form['id']
+        session['email'] = email
 
+    remember = True if request.form.get('remember') else False
     user = users.query.filter_by(email=email).first()
 
     # check if the user actually exists

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, flash, redirect
+from flask import Blueprint, render_template, request, url_for, flash, redirect, g, session
 from flask_login import login_required, current_user
 from werkzeug.exceptions import abort
 from . import db
@@ -31,7 +31,12 @@ def get_post_race(post_id):
     if post is None:
         abort(404)
     return post
+'''
+if current_user.is_authenticated():
+    g.user = current_user.get_id()
 
+user_email = session['email']
+'''
 @main.route('/')
 def index():
     return render_template('index.html')
@@ -111,3 +116,14 @@ def courses():
 def course(race_id):
     race = get_post_race(race_id)
     return render_template('race.html', race=race)
+
+@main.route('/courses/<int:id>/participe', methods=('POST',))
+def participe(id):
+    post = get_post_race(id)
+    conn = get_db_connection()
+    #print(user_id)
+    #conn.execute('UPDATE users WHERE email = ? SET courses = ?', (id, email))
+    conn.commit()
+    conn.close()
+    flash('"{}" Votre participation a été enregistrée à'.format(post['name']))
+    return redirect(url_for('main.courses', post=post))

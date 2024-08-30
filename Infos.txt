@@ -31,7 +31,12 @@ Tuto de base
 https://python.developpez.com/tutoriel/intro-flask-python3/
 Commandes windows
 https://flask.palletsprojects.com/en/1.1.x/cli/
-Setup du virtual env
+set FLASK_APP=triathlon
+set FLASK_ENV=development
+flask run
+Setup du virtual env : 
+pip install virtualenv
+python -m virtualenv <nameOfEnv>
 https://stackoverflow.com/questions/67997606/how-can-i-run-flask-in-windows
 https://stackoverflow.com/questions/35950740/virtualenv-is-not-recognized-as-an-internal-or-external-command-operable-prog
 Setup du app.py : réponse de Viraj : https://stackoverflow.com/questions/29277581/flask-nameerror-name-app-is-not-defined
