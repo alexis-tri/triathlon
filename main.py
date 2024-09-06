@@ -121,9 +121,14 @@ def course(race_id):
 def participe(id):
     post = get_post_race(id)
     conn = get_db_connection()
-    #print(user_id)
-    #conn.execute('UPDATE users WHERE email = ? SET courses = ?', (id, email))
+    getcourses = conn.execute("SELECT courses FROM users WHERE email = ? ", (session["email"],))
+    if getcourses is not None:
+        getcourses = str(getcourses)
+        courses = [int(elem) for elem in getcourses.split(", ")] # transformation d'un string vers un array
+        courses.append(id) # ajout d'un élément à l'array
+        getcourses = "".join(f"{course}, " for course in courses)[:-2] # opération inverse (array vers string)
+    conn.execute("UPDATE users WHERE email = ? SET courses = ? ", (session["email"],),(courses))
     conn.commit()
     conn.close()
-    flash('"{}" Votre participation a été enregistrée à'.format(post['name']))
+    flash(f"Votre participation ({getcourses}) a été enregistrée à {post["name"]}.")
     return redirect(url_for('main.courses', post=post))

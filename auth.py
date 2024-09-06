@@ -29,11 +29,8 @@ def login_post():
     # login code goes here
     email = request.form.get('email')
     password = request.form.get('password')
-    if request.method == 'POST':
-        session['username'] = request.form['prenom']
-        session['email'] = request.form['email']
-        session['id'] = request.form['id']
-        session['email'] = email
+    session['email'] = email
+        #session['id'] = request.form['id']
 
     remember = True if request.form.get('remember') else False
     user = users.query.filter_by(email=email).first()

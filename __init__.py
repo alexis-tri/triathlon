@@ -9,7 +9,7 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'secret-key-goes-here'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/alexis.tristant/OneDrive - VINCI Energies/Documents/Integration/Bloc-note/Perso_Space/SyncSportAss/triathlon/database.db'
 
     db.init_app(app)
     login_manager = LoginManager()
