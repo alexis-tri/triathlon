@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
+<h2>Les courses clubs : </h2>
+    <ul>
+        {% if favorite_races %}
+            {% for race in favorite_races %}
+                <li>{{ race.name }} ({{ race.date }}) - Distance: {{ race.distance }}</li>
+            {% endfor %}
+        {% else %}
+            <li>Aucune course club pour le moment...</li>
+        {% endif %}
+</ul>
     <h1>{% block title %} Courses {% endblock %}</h1>
     {% for race in races %}
         <a href="{{ url_for('main.course', race_id=race['id']) }}">

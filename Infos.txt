@@ -1,4 +1,6 @@
 Liste des sites scrapés : 
+1000pattes
+opentri 
 
 Tuto database :
 

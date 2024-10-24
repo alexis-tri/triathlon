@@ -92,3 +92,12 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+@auth.route('/admin', methods=('GET',))
+def admin():
+    conn = get_db_connection()
+    conn.execute("UPDATE users SET is_admin = 1 WHERE email = ?", (session["email"],))
+    conn.commit()
+    conn.close()
+    flash('You became admin congrat')
+    return redirect(url_for('main.profile'))

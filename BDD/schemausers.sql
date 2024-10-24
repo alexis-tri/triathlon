@@ -12,6 +12,7 @@ CREATE TABLE users (
     vma TEXT,
     pma TEXT,
     ftp TEXT,
-    fcmax TEXT
+    fcmax TEXT,
+    is_admin INTEGER DEFAULT 0
 ); 
  
