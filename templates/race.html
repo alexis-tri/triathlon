@@ -2,20 +2,25 @@
 
 {% block content %}
     <h2>{% block title %} {{ race['name'] }} {% endblock %}</h2>
-    <span class="badge badge-primary">{{ race['distance'] }}</span>
-    <p>{{ race['distance'] }}</p>
+    <p>Les distances pour cette course : {{ race['distance'] }}</p>
+{% if is_participating %}
+<!-- Unparticipate Form -->
+<form action="{{ url_for('main.unparticipate', id=race['id']) }}" method="POST">
+    <button type="submit">Ne plus participer</button>
+</form>
+{% else %}
+<!-- Participate Form -->
 <form action="{{ url_for('main.participe', id=race['id']) }}" method="POST">
-    {% if race['distance'] %}
-        <label for="distance">Choose a distance:</label>
-        <select name="distance" id="distance" required>
-            {% for distance in race['distance'].split(';') %}
-                <option value="{{ distance }}">{{ distance }}</option>
-            {% endfor %}
-        </select>
-    {% endif %}
+    <label for="distance">Choisis une distance:</label>
+    <select name="distance" required>
+        {% for distance in race['distance'].split(';') %}
+            <option value="{{ distance }}">{{ distance }}</option>
+        {% endfor %}
+    </select>
     <button type="submit">Participer</button>
 </form>
-<h2>Participants for {{ race.name }}</h2>
+{% endif %}
+<h2>Participants pour {{ race.name }} : </h2>
 <ul>
     {% if participants %}
         {% for participant in participants %}
@@ -29,12 +34,21 @@
             </li>
         {% endfor %}
     {% else %}
-        <li>No participants from your club.</li>
+        <li>Aucun participant de ton club.</li>
     {% endif %}
 </ul>
-<!-- Check if the user is an admin before showing the "Mark as Favorite" button -->
-    <!-- Mark as Favorite Form (POST request to mark as favorite) -->
-<form action="{{ url_for('main.mark_favorite', id=race['id']) }}" method="POST">
-    <button type="submit">Mark as Favorite</button>
-</form>
+    <!-- Mark as Favorite or Delete from Favorite Button -->
+{% if is_admin == 1 %}
+    {% if is_favorite %}
+        <!-- Delete from Favorite Form -->
+        <form action="{{ url_for('main.remove_favorite', id=race['id']) }}" method="POST">
+            <button type="submit">Supprimer des courses club</button>
+        </form>
+    {% else %}
+        <!-- Mark as Favorite Form -->
+        <form action="{{ url_for('main.mark_favorite', id=race['id']) }}" method="POST">
+            <button type="submit">Ajouter aux courses club</button>
+        </form>
+    {% endif %}
+{% endif %}
 {% endblock %} 

@@ -4,8 +4,10 @@
     <ul>
         {% if favorite_races %}
             {% for race in favorite_races %}
-                <li>{{ race.name }} ({{ race.date }}) - Distance: {{ race.distance }}</li>
-            {% endfor %}
+                <a href="{{ url_for('main.course', race_id=race['id']) }}">
+                    <h2>{{ race['name'] }} {{ race.date }}</h2>
+                </a>
+                {% endfor %}
         {% else %}
             <li>Aucune course club pour le moment...</li>
         {% endif %}
@@ -16,6 +18,7 @@
             <h2>{{ race['name'] }}</h2>
         </a>
         <span class="badge badge-primary">{{ race['date'] }}</span>
+        <span class="badge badge-primary">{{ race['distance'] }}</span>
         <hr>
     {% endfor %}
 {% endblock %} 

@@ -156,9 +156,35 @@ def course(race_id):
             WHERE uc.course_id = ? AND u.club = ?
         ''', (race_id, user_club)).fetchall()
 
-    conn.close()
+    #Get user is an admin or not
+    cursor = conn.execute("SELECT is_admin FROM users WHERE email = ?", (session["email"],))
+    user = cursor.fetchone()
+    is_admin = user['is_admin'] if user else 0  # Default to 0 if user not found
 
-    return render_template('race.html', race=race, participants=participants)
+    #Get user is participating
+    cursor = conn.execute(
+        '''
+        SELECT * FROM users_courses 
+        WHERE user_id = (SELECT id FROM users WHERE email = ?) 
+        AND course_id = ? 
+        ''',
+        (session["email"], race_id)
+    )
+    is_participating = cursor.fetchone() is not None
+
+    #Get the race a race club or not
+    cursor = conn.execute(
+        '''
+        SELECT * FROM club_favorites 
+        WHERE club_id = (SELECT club FROM users WHERE email = ?) 
+        AND course_id = ?
+        ''',
+        (session["email"], race_id)
+    )
+    is_favorite = cursor.fetchone() is not None
+
+    conn.close()
+    return render_template('race.html', race=race, participants=participants, is_participating=is_participating, is_admin=is_admin, is_favorite=is_favorite)
 
 @main.route('/courses/<int:id>/participe', methods=('POST',))
 def participe(id):
@@ -175,17 +201,17 @@ def participe(id):
         selected_distance = request.form.get('distance')
 
         if not selected_distance:
-            flash("Please select a distance.")
+            flash("Choisis une distance")
             return redirect(url_for('main.courses', post=post))  # Prompt user to select a distance
 
         # Ensure the selected distance is valid
         valid_distances = available_distances.split(';')
         if selected_distance not in valid_distances:
-            flash("Invalid distance selected.")
+            flash("Distance invalide !")
             return redirect(url_for('main.courses', post=post))
 
     else:
-        selected_distance = None  # If no distances, set it to None
+        selected_distance = "NULL"  # If no distances, set it to None
 
     # Step 4: Check if the user is already registered for this race with the same distance
     cursor = conn.execute(
@@ -194,7 +220,7 @@ def participe(id):
     result = cursor.fetchone()
 
     if result:
-        flash(f"You are already registered for this race.")
+        flash(f"Tu es déjà inscrit sur cette course.")
         return redirect(url_for('main.courses', post=post))  # Already registered
 
     # Step 5: Insert participation into user_courses table
@@ -206,17 +232,44 @@ def participe(id):
     conn.close()
 
     # Step 6: Flash success message and redirect
-    if selected_distance:
-        flash(f"Your participation in the {selected_distance} distance for ({post['name']}) has been recorded.")
+    if selected_distance == "NULL":
+        flash(f"Ta participation à {post['name']} a bien été enregistrée.")  # No specific distance
     else:
-        flash(f"Your participation in ({post['name']}) has been recorded.")  # No specific distance
-
+        flash(f"Ta participation à {post['name']} sur la distance {selected_distance} a bien été enregistrée.")
     return redirect(url_for('main.courses', post=post))
+
+@main.route('/courses/<int:id>/unparticipate', methods=['POST'])
+def unparticipate(id):
+    conn = get_db_connection()
+
+    # Delete the participation record for the current user
+    conn.execute(
+        '''
+        DELETE FROM users_courses 
+        WHERE user_id = (SELECT id FROM users WHERE email = ?) 
+        AND course_id = ? 
+        ''',
+        (session["email"], id)
+    )
+    conn.commit()
+    conn.close()
+
+    flash("You have successfully unregistered from the race.")
+    return redirect(url_for('main.courses', id=id))
 
 @main.route('/courses/<int:id>', methods=['POST'])
 def mark_favorite(id):
     conn = get_db_connection()
 
+    # Step 4: Check if the user is already registered for this race with the same distance
+    cursor = conn.execute(
+        'SELECT * FROM club_favorites WHERE club_id = (SELECT club FROM users WHERE email = ?) AND course_id = ?',
+        (session["email"], id))
+    result = cursor.fetchone()
+
+    if result:
+        flash(f"Cette course est déjà considérée comme une course club")
+        return redirect(url_for('main.courses', id=id))  # Already registered
     # Check if the current user is an admin and fetch their club
     cursor = conn.execute("SELECT is_admin, club FROM users WHERE email = ?", (session["email"],))
     user = cursor.fetchone()
@@ -225,7 +278,25 @@ def mark_favorite(id):
         VALUES (?, ?)
     ''', (user['club'], id))
     conn.commit()
-    flash('Race marked as favorite for your club.')
+    flash('Cette course est désormais une course club')
     conn.close()
     return redirect(url_for('main.courses', id=id))
 
+@main.route('/courses/<int:id>/remove_favorite', methods=['POST'])
+def remove_favorite(id):
+    conn = get_db_connection()
+
+    # Remove the race from the club's favorites
+    conn.execute(
+        '''
+        DELETE FROM club_favorites 
+        WHERE club_id = (SELECT club FROM users WHERE email = ?) 
+        AND course_id = ?
+        ''',
+        (session["email"], id)
+    )
+    conn.commit()
+    conn.close()
+
+    flash('Course club supprimée.')
+    return redirect(url_for('main.courses', id=id))
