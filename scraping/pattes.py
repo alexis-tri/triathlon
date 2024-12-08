@@ -61,7 +61,14 @@ class PattesEvent:
     # Get each distance of the event heuristicly from the description
     def get_distance(self):
         regex = re.compile(r"\d+(?:\.\d+)?\s*km")
-        distance = self.event.find(class_="tribe-events-calendar-list__event-description").text
+        #distance = self.event.find(class_="tribe-events-calendar-list__event-description").text
+            # Safely find the event description using a partial class match
+        event_description_element = self.event.find(class_=lambda c: c and "tribe-events-calendar-list__event-description" in c)
+        if event_description_element is None:
+        # If no description is found, return an empty string or appropriate default
+            return ""
+        # Extract text from the event description
+        distance = event_description_element.text
         distance = "".join([regex.findall(distance)][0]).split(" ")
         distance = [elem.replace("km", "") for elem in distance]
         distance = [elem for elem in distance if elem]

@@ -194,7 +194,8 @@ def participe(id):
     cursor = conn.execute('SELECT distance FROM courses WHERE id = ?', (id,))
     course = cursor.fetchone()
 
-    available_distances = course[0]  # This will be a comma-separated string like '10,21,42' or empty
+    available_distances = course[0] if course else None  # Safeguard if course is None
+    selected_distance = request.form.get('distance')  # Always fetch submitted distance
 
     # Step 3: Handle distance selection logic
     if available_distances:  # If there are multiple distances

@@ -11,12 +11,17 @@
 {% else %}
 <!-- Participate Form -->
 <form action="{{ url_for('main.participe', id=race['id']) }}" method="POST">
-    <label for="distance">Choisis une distance:</label>
-    <select name="distance" required>
-        {% for distance in race['distance'].split(';') %}
-            <option value="{{ distance }}">{{ distance }}</option>
-        {% endfor %}
-    </select>
+    {% if race['distance'] and race['distance'].strip() %}
+        <label for="distance">Choisis une distance:</label>
+        <select name="distance" required>
+            {% for distance in race['distance'].split(';') %}
+                <option value="{{ distance }}">{{ distance }}</option>
+            {% endfor %}
+        </select>
+    {% else %}
+        <!-- No distance to choose -->
+        <input type="hidden" name="distance" value="NULL">
+    {% endif %}
     <button type="submit">Participer</button>
 </form>
 {% endif %}
@@ -26,10 +31,7 @@
         {% for participant in participants %}
             <li>
                 {{ participant.prenom }} {{ participant.name }} ({{ participant.email }}) - 
-                {% if participant.distance %}
-                    Distance: {{ participant.distance }}
-                {% else %}
-                    No specified distance
+                {% if participant.distance and participant.distance != "NULL" %} Distance: {{ participant.distance }}
                 {% endif %}
             </li>
         {% endfor %}
